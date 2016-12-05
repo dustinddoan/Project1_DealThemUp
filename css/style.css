@@ -1,0 +1,181 @@
+#container {
+  width: window().width;
+  height: 600px;
+  /*background-color: gray;*/
+  /*background-image: url('../img/blackjack_table.png');
+  background-size: 700px 500px;*/
+  /*background-image: url('../img/bj.jpg');*/
+  background-image: url('../img/bj1.png');
+  /*background-image: url('../img/bj2.png');*/
+  /*background-image: url('../img/bj3.jpeg');*/
+
+  background-size: cover;
+}
+#dealer {
+  display: inline-block;
+  position: absolute;
+  top: 103px;
+  left: 431px;
+}
+
+#player {
+  display: inline-block;
+  position: absolute;
+  top: 335px;
+  left: 431px;
+}
+
+#dealer-board {
+    position: absolute;
+    top: 24px;
+    left: 319px;
+    color: #afbd90;
+    background-color: #061416;
+    width: 147px;
+    height: 61px;
+}
+
+#player-board {
+  position: absolute;
+  top: 322px;
+  left: 904px;
+  color: #afbd90;
+}
+
+#control {
+  position: absolute;
+  top: 566px;
+  left: 679px;
+  width: 400px;
+  height: 40px;
+}
+
+#new-game {
+  position: relative;;
+  top: 0px;
+  left: 0px;
+  width: 130px;
+  height: 40px;
+  background-color: #384382;
+}
+#new-game:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+
+}
+
+#hit {
+  position: absolute;;
+  top: 0px;
+  left: 130px;
+  width: 130px;
+  height: 40px;
+  background-color: #384382;
+
+}
+#hit:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+
+}
+
+#stand {
+  position: absolute;
+  top: 0px;
+  left: 260px;
+  width: 130px;
+  height: 40px;
+  background-color: #384382;
+
+}
+#stand:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+
+}
+
+.card {
+  width: 70px;
+  height: 90px;
+  background-color: green;
+  /*border: 1px solid black;*/
+  border-radius: 8px;
+  float: left;
+  margin: 10px;
+}
+
+
+
+img {
+  width: 70px;
+  height: 90px;
+  border-radius: 8px;
+}
+.face-down {
+  visibility: hidden;
+}
+
+.hidden {
+  background-image: url('../img/faceDown.jpg');
+  background-size: 70px 9px;
+  border-radius: 8px;
+}
+
+#bet {
+  position: absolute;
+  top: 461px;
+  left: 943px;
+  font-family: monospace;
+  font-size: 30px;
+  color: #afbd90;
+}
+
+.bet {
+  position: absolute;
+  top: 501px;
+  left: 888px;
+  font-family: monospace;
+  font-size: 30px;
+  color: #afbd90;
+  background-color: #2b2b2b;
+  opacity: 50%;
+  width: 178px;
+  height: 30px;
+  text-align: center;
+}
+
+.board {
+    font-family: cursive;
+    font-size: 20px;
+    font-weight: bolder;
+    color: #afbd90;
+}
+
+#dealer-credit {
+  position: absolute;
+  top: 24px;
+  left: 834px;
+  font-family: cursive;
+  font-size: 20px;
+  font-weight: bolder;
+  color:
+}
+#winner {
+  position: absolute;
+  font-family: fantasy;
+  font-weight: bold;
+  top: 275px;
+  left: 216px;
+  font-size: 30px;
+  color: blue;
+}
+
+#message {
+  position: absolute;
+  top: 90px;
+  left: 50px;
+  font-family: cursive;
+  font-size: 20px;
+  font-weight: bolder;
+  color: #afbd90;
+  text-align: center;
+  width: 100px;
+  height: 50px;
+}

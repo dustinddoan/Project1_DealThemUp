@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Black Jack</title>
+    <link rel="stylesheet" href="css/style.css" media="screen" title="no title">
+
+  </head>
+  <body>
+    <div id="container">
+      <div id="dealer">
+        <div id="dealer1" class="card"></div>
+        <div id="dealer2" class="card"></div>
+        <div id="dealer3" class="card"></div>
+        <div id="dealer4" class="card"></div>
+        <div id="dealer5" class="card"></div>
+      </div>
+      <div id="dealer-board">
+        <p class="board">Dealer Score: <span class="dealer-score"></span></p>
+
+
+      </div>
+      <div id="dealer-credit">
+        <p class="board">Credit:   $<span class="dealer-credit"></span> </p>
+      </div>
+
+
+      <div id="player">
+        <div id="player1" class="card"></div>
+        <div id="player2" class="card"></div>
+        <div id="player3" class="card"></div>
+        <div id="player4" class="card"></div>
+        <div id="player5" class="card"></div>
+
+      </div>
+      <div id="player-board">
+        <p class="board">Player Scores: <span class="player-score"></p>
+        <p class="board">Credit:   $<span class="player-credit"></p>
+
+      </div>
+      <div class="">
+        <p id="bet">BET</p>
+        <p class="bet"></p>
+      </div>
+
+      <div id="control">
+        <button id="new-game"type="button" name="button">Deal</button>
+        <button id="hit" type="button" name="button">Hit</button>
+        <button id="stand" type="button" name="button">Stand</button>
+      </div>
+      <div id="message">
+        <h3 class="whoWin"></h3>
+      </div>
+      <div id="winner">
+        <h2></h2>
+      </div>
+
+    </div>
+
+
+    <script src="js/jquery-3.1.1.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
