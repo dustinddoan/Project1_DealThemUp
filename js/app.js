@@ -78,7 +78,10 @@ function genDealerCard(){
   $dealer5.html('')
 
   dealerCard1 = deal();
+
   $dealer1.prepend(`<img src="img/cards/${dealerCard1.suit}/${dealerCard1.name}.jpg">`)
+  $dealer1.hide();
+  $dealer1.show('slow')
   $dCredit.text(dCredit)
   $dScore.text('')
 
@@ -103,15 +106,24 @@ function genPlayerCard(){
   playerCard2 = deal();
   $player1.prepend(`<img src="img/cards/${playerCard1.suit}/${playerCard1.name}.jpg">`)
   $player2.prepend(`<img src="img/cards/${playerCard2.suit}/${playerCard2.name}.jpg">`)
+  $player1.hide();
+  $player2.hide();
+  $player1.show('slow')
+  $player2.show('slow')
 
   if(isBlackjack(playerCard1, playerCard2)) {
     playerWin();
+  } else if(playerCard1.name === 'Ace'){
+    playerScore = playerCard2.value + 1;
+
+  }else if(playerCard2.name === 'Ace'){
+    playerScore = playerCard1.value + 1;
   } else {
     playerScore = playerCard1.value + playerCard2.value;
-    $pScore.text(playerScore)
-    $pCredit.text(pCredit);
-    $bet.text(bet)
   }
+  $pScore.text(playerScore)
+  $pCredit.text(pCredit);
+  $bet.text(bet)
 
 
 
@@ -132,25 +144,27 @@ $newGame.on('click', function() {
 
     if(hitCount === 3){
       hitCard = deal();
-      playerScore += hitCard.value;
-      $pScore.text(playerScore)
-
       $player3.prepend(`<img src="img/cards/${hitCard.suit}/${hitCard.name}.jpg">`)
 
+      if(hitCard.name === 'Ace') {playerScore += 1;}
+      else {playerScore += hitCard.value}
+      $pScore.text(playerScore)
 
     }else if(hitCount === 4){
       hitCard = deal();
-      playerScore += hitCard.value;
-      $pScore.text(playerScore)
-
       $player4.prepend(`<img src="img/cards/${hitCard.suit}/${hitCard.name}.jpg">`)
+
+      if(hitCard.name === 'Ace') {playerScore += 1;}
+      else {playerScore += hitCard.value}
+      $pScore.text(playerScore)
 
     }else if(hitCount === 5){
       hitCard = deal();
-      playerScore += hitCard.value;
-      $pScore.text(playerScore)
-
       $player5.prepend(`<img src="img/cards/${hitCard.suit}/${hitCard.name}.jpg">`)
+
+      if(hitCard.name === 'Ace') {playerScore += 1;}
+      else {playerScore += hitCard.value}
+      $pScore.text(playerScore)
 
       $(this).off();
     }
@@ -162,16 +176,7 @@ $newGame.on('click', function() {
       $hit.off();
     }
 
-    if(pCredit === 0){
-      $pCredit.text('0')
-      $bet.text('0');
-      $newGame.off();
-      $hit.off();
-      $stand.off();
-
-      $winner.text('YOU ARE OUT OF MONEY - RELOAD THE PAGE TO REPLAY');
-      console.log('GO HOME');
-    }
+    if(pCredit === 0){loser();}
 
   })
 
@@ -184,10 +189,10 @@ $newGame.on('click', function() {
 
     if (isBlackjack(dealerCard1, dealerCard2)) {
       console.log('Congrats');
-      pCredit -= 10;
-      dCredit += 10;
+      dealerWin();
     } else if (dealerScore === playerScore){
-      $whoWin.text('TIE');
+      tieHand();
+      whoWin.text('');
       $hit.off();
       $stand.off();
     } else if(dealerScore > playerScore && !isBusted(dealerScore)){
@@ -195,7 +200,9 @@ $newGame.on('click', function() {
     } else if(dealerScore < playerScore){
       dealCard = deal();
       $dealer3.prepend(`<img src="img/cards/${dealCard.suit}/${dealCard.name}.jpg">`)
-      dealerScore += dealCard.value;
+
+      if(dealCard.name === 'Ace') {dealerScore += 1;}
+      else {dealerScore += dealCard.value;}
       $dScore.text(dealerScore)
 
       if(isBusted(dealerScore)){
@@ -205,37 +212,32 @@ $newGame.on('click', function() {
       } else if(dealerScore < playerScore) {
         dealCard = deal();
         $dealer4.prepend(`<img src="img/cards/${dealCard.suit}/${dealCard.name}.jpg">`)
-        dealerScore += dealCard.value;
+        if(dealCard.name === 'Ace') {dealerScore += 1;}
+        else {dealerScore += dealCard.value;}
         $dScore.text(dealerScore)
 
         if(isBusted(dealerScore)) {
           playerWin();
         }else if(dealerScore > playerScore){
           dealerWin();
+        }else if(dealerScore < playerScore && !isBusted(dealerScore)) {
+          dealCard = deal();
+          $dealer5.prepend(`<img src="img/cards/${dealCard.suit}/${dealCard.name}.jpg">`)
+          if(dealCard.name === 'Ace') {dealerScore += 1;}
+          else {dealerScore += dealCard.value;}
+          $dScore.text(dealerScore)
+          if(!isBusted(dealerScore)){dealerWin}
+          else if(isBusted(dealerScore)){playerWin();}
+          else if(playerScore < dealerScore) {playerWin()}
+          else {dealerWin()}
         }
-
-
       }
-
-
     }
 
 
-    if(pCredit === 0){
-      $pCredit.text('0')
-      $bet.text('0');
-      $newGame.off();
-      $hit.off();
-      $stand.off();
-      $winner.text('YOU ARE OUT OF MONEY - RELOAD THE PAGE TO REPLAY');
-    }
-    if(dCredit === 0){
-      $dCredit.text('0')
-      $newGame.off();
-      $hit.off();
-      $stand.off();
-      $winner.text('YOU BEAT THE DEALER - LET CELEBRATE');
-    }
+    if(pCredit === 0){loser();}
+    if(dCredit === 0){winner();}
+
     $(this).off();
     $hit.off();
   })
@@ -251,11 +253,9 @@ function isBusted(score) {
   }
   return false;
 }
-function dealerWin(){
-  // $dMessage.text(dealerScore);
-  // $pMessage.text(playerScore);
-  $whoWin.text('Dealer Win')
 
+function dealerWin(){
+  $whoWin.text('Dealer Win')
   console.log('Dealer win');
   setTimeout(function(){
     $whoWin.text('');
@@ -265,15 +265,35 @@ function dealerWin(){
 }
 
 function playerWin(){
-  // $dMessage.text(`Dealer Score: ${dealerScore}`);
-  // $pMessage.text(`Player Score ${playerScore}`);
   $whoWin.text('Player Win');
   console.log('Player win');
-
   setTimeout(function() {
     $whoWin.text('')
   }, 1500)
     pCredit += 10;
     dCredit -= 10;
+}
 
+function tieHand(){
+  $whoWin.text('TIE');
+  setTimeout(function() {
+    whoWin.text('');
+  }, 1500);
+}
+
+function winner(){
+  $dCredit.text('0')
+  $newGame.off();
+  $hit.off();
+  $stand.off();
+  $winner.text('YOU BEAT THE DEALER - LET CELEBRATE');
+}
+
+function loser() {
+  $pCredit.text('0')
+  $bet.text('0');
+  $newGame.off();
+  $hit.off();
+  $stand.off();
+  $winner.text('YOU ARE OUT OF MONEY - RELOAD THE PAGE TO REPLAY');
 }

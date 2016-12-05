@@ -22,11 +22,16 @@ The objective of the game is to beat the dealer in one of the following ways:
 
 ## User Stories:
 As a player, I have option to start the game with randomly deal the card for player and dealer
+
 As a player, I have option to get more card when the score is less than 21 until it BUSTED
+
 As a player, I have option to stand down the card as I see I have good score
-As a player, I can see my score through the scoreboard.
+
+As a player, I can see my score through the scoreboard
+
 As a player, I am prompted who wins a round
-As a player, I am prompted who wins the game.
+
+As a player, I am prompted who wins the game
 
 ## Future Works:
 
