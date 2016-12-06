@@ -36,8 +36,10 @@ As a player, I am prompted who wins the game
 ## Future Works:
 
 The game will have more option for the winner as well as the way the ACE is count based on the number of card player and dealer have in hand
-More styling
 
+Allow the player to change the bet amount based on what remaining
+
+More styling and sounds effect
 ## Built With
 
 * [HTML]HyperText Markup Language is the most basic building block of the Web
