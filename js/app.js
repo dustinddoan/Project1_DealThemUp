@@ -1,3 +1,5 @@
+
+
 function Card(suit, name, value) {
   this.name = name;
   this.suit = suit;
@@ -35,10 +37,13 @@ $dMessage =$('#message .dealer-message')
 $pMessage =$('#message .player-message')
 $whoWin = $('.whoWin')
 $winner = $('#winner')
+$winner1 = $('.winner1')
 
 $dScore = $('#dealer-board .dealer-score')
 $dCredit = $('#dealer-credit .dealer-credit')
 $bet = $('.bet')
+$reload = $('#btn-reload')
+$reload.hide();
 var pCredit = 20;
 var dCredit = 20;
 var bet = 10;
@@ -68,6 +73,10 @@ var hitCount = 2;
 
 var ten = ['Ten', 'Jack', 'Queen', 'King'];
 
+$reload.on('click', function() {
+  location.reload();
+  // $this.off();
+})
 
 function genDealerCard(){
   $dealer1.html('')
@@ -113,11 +122,8 @@ function genPlayerCard(){
 
   if(isBlackjack(playerCard1, playerCard2)) {
     playerWin();
-  } else if(playerCard1.name === 'Ace'){
-    playerScore = playerCard2.value + 1;
-
-  }else if(playerCard2.name === 'Ace'){
-    playerScore = playerCard1.value + 1;
+  } else if(playerCard1.name === 'Ace' && playerCard2.name === 'Ace'){
+    playerScore = 2;
   } else {
     playerScore = playerCard1.value + playerCard2.value;
   }
@@ -137,7 +143,7 @@ $newGame.on('click', function() {
   genPlayerCard();
   genDealerCard();
   $hit.off('click');
-  $stand.off('click')
+  $stand.off('click');
 
   $hit.on('click', function() {
     hitCount += 1;
@@ -183,8 +189,15 @@ $newGame.on('click', function() {
 
   $stand.on('click', function() {
     $dealer2.prepend(`<img src="img/cards/${dealerCard2.suit}/${dealerCard2.name}.jpg">`)
-    dealerScore = dealerCard1.value + dealerCard2.value;
+    if(dealerCard1.name === 'Ace' && dealerCard2.value <= 5) {
+      dealerScore = dealerCard2.value + 1
+    } else if (dealerCard2.name === 'Ace' && dealerCard1.value <=5) {
+      dealerScore = dealerCard1.value + 1
+    } else {
+      dealerScore = dealerCard1.value + dealerCard2.value;
+    }
     $dScore.text(dealerScore)
+
     console.log(dealerScore);
 
     if (isBlackjack(dealerCard1, dealerCard2)) {
@@ -201,6 +214,7 @@ $newGame.on('click', function() {
       dealCard = deal();
       $dealer3.prepend(`<img src="img/cards/${dealCard.suit}/${dealCard.name}.jpg">`)
 
+
       if(dealCard.name === 'Ace') {dealerScore += 1;}
       else {dealerScore += dealCard.value;}
       $dScore.text(dealerScore)
@@ -209,24 +223,35 @@ $newGame.on('click', function() {
         playerWin();
       } else if(dealerScore > playerScore){
         dealerWin();
-      } else if(dealerScore < playerScore) {
+      } else if (dealerScore === playerScore){
+        tieHand();
+        whoWin.text('');
+        $hit.off();
+        $stand.off();
+      } else if(dealerScore < playerScore && !isBusted(dealerScore)) {
         dealCard = deal();
         $dealer4.prepend(`<img src="img/cards/${dealCard.suit}/${dealCard.name}.jpg">`)
+
         if(dealCard.name === 'Ace') {dealerScore += 1;}
         else {dealerScore += dealCard.value;}
         $dScore.text(dealerScore)
 
         if(isBusted(dealerScore)) {
           playerWin();
-        }else if(dealerScore > playerScore){
+        } else if(dealerScore > playerScore){
           dealerWin();
-        }else if(dealerScore < playerScore && !isBusted(dealerScore)) {
+        } else if (dealerScore === playerScore){
+          tieHand();
+          whoWin.text('');
+          $hit.off();
+          $stand.off();
+        } else if(dealerScore < playerScore && !isBusted(dealerScore)) {
           dealCard = deal();
           $dealer5.prepend(`<img src="img/cards/${dealCard.suit}/${dealCard.name}.jpg">`)
           if(dealCard.name === 'Ace') {dealerScore += 1;}
           else {dealerScore += dealCard.value;}
           $dScore.text(dealerScore)
-          if(!isBusted(dealerScore)){dealerWin}
+          if(!isBusted(dealerScore)){dealerWin()}
           else if(isBusted(dealerScore)){playerWin();}
           else if(playerScore < dealerScore) {playerWin()}
           else {dealerWin()}
@@ -235,8 +260,10 @@ $newGame.on('click', function() {
     }
 
 
-    if(pCredit === 0){loser();}
-    if(dCredit === 0){winner();}
+    if(pCredit === 0){
+      loser();}
+    if(dCredit === 0){
+      winner();}
 
     $(this).off();
     $hit.off();
@@ -286,7 +313,8 @@ function winner(){
   $newGame.off();
   $hit.off();
   $stand.off();
-  $winner.text('YOU BEAT THE DEALER - LET CELEBRATE');
+  $winner1.text('YOU BEAT THE DEALER - LET CELEBRATE');
+  $reload.show();
 }
 
 function loser() {
@@ -295,5 +323,14 @@ function loser() {
   $newGame.off();
   $hit.off();
   $stand.off();
-  $winner.text('YOU ARE OUT OF MONEY - RELOAD THE PAGE TO REPLAY');
+  $winner1.text('YOU ARE OUT OF MONEY - RELOAD THE PAGE TO REPLAY');
+  $reload.show();
+
 }
+
+function blinker(){
+  $('#winner').fadeOut(500);
+  $('#winner').fadeIn(500);
+}
+
+// setInterval(blinker, 1000)
