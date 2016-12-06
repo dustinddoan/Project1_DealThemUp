@@ -1,32 +1,5 @@
 
 
-function Card(suit, name, value) {
-  this.name = name;
-  this.suit = suit;
-  this.value = value;
-}
-
-var suit = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
-var nam = ["Ace", "Two", 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King'];
-var value = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
-
-function genDeck(){
-  var deck = [];
-  for(var i = 0; i < suit.length; i++){
-    for(var j = 0; j < 13; j++){
-      deck.push(new Card(suit[i], nam[j], value[j]))
-    }
-  }
-  return deck
-}
-var deck = genDeck();
-
-function deal(){
-  var randomCard = Math.floor(Math.random() * 51);
-  var card = deck[randomCard];
-  return card;
-}
-
 $newGame = $('#new-game');
 $hit = $('#hit');
 $stand = $('#stand');
@@ -44,8 +17,8 @@ $dCredit = $('#dealer-credit .dealer-credit')
 $bet = $('.bet')
 $reload = $('#btn-reload')
 $reload.hide();
-var pCredit = 20;
-var dCredit = 20;
+var pCredit = 40;
+var dCredit = 40;
 var bet = 10;
 
 var dealerCard1 = deal();
@@ -71,7 +44,39 @@ var $player4 = $('#player4');
 var $player5 = $('#player5')
 var hitCount = 2;
 
+
+
 var ten = ['Ten', 'Jack', 'Queen', 'King'];
+
+var suit = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
+var nam = ["Ace", "Two", 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King'];
+var value = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+
+function Card(suit, name, value) {
+  this.name = name;
+  this.suit = suit;
+  this.value = value;
+}
+
+function genDeck(){
+  var deck = [];
+  for(var i = 0; i < suit.length; i++){
+    for(var j = 0; j < 13; j++){
+      deck.push(new Card(suit[i], nam[j], value[j]))
+    }
+  }
+  return deck
+}
+
+var deck = genDeck();
+
+function deal(){
+  var randomCard = Math.floor(Math.random() * 51);
+  var card = deck[randomCard];
+  return card;
+}
+
+
 
 $reload.on('click', function() {
   location.reload();
@@ -130,10 +135,6 @@ function genPlayerCard(){
   $pScore.text(playerScore)
   $pCredit.text(pCredit);
   $bet.text(bet)
-
-
-
-
   console.log(playerScore);
 
 }
