@@ -1,5 +1,5 @@
 #container {
-  width: window().width;
+  width: 100%;
   height: 600px;
 
   background-image: url('../img/bj1.png');
