@@ -242,7 +242,6 @@ $newGame.on('click', function() {
           dealerWin();
         } else if (dealerScore === playerScore){
           tieHand();
-          whoWin.text('');
           $hit.off();
           $stand.off();
         } else if(dealerScore < playerScore && !isBusted(dealerScore)) {
@@ -266,7 +265,7 @@ $newGame.on('click', function() {
       winner();}
 
     $(this).off();
-    $hit.off();
+    $hit.addClass('disabled');
   })
 
   console.log(playerScore);
@@ -313,6 +312,9 @@ function winner(){
   $newGame.off();
   $hit.off();
   $stand.off();
+  $newGame.toggleClass('disabled');
+  $hit.toggleClass('disabled');
+  $stand.toggleClass('disabled');
   $winner1.text('YOU BEAT THE DEALER - LET CELEBRATE');
   $reload.show();
 }
@@ -323,14 +325,19 @@ function loser() {
   $newGame.off();
   $hit.off();
   $stand.off();
+  $newGame.toggleClass('disabled');
+  $hit.toggleClass('disabled');
+  $stand.toggleClass('disabled');
   $winner1.text('YOU ARE OUT OF MONEY - RELOAD THE PAGE TO REPLAY');
   $reload.show();
 
 }
 
 function blinker(){
-  $('#winner').fadeOut(500);
-  $('#winner').fadeIn(500);
+  $('#winner1').fadeOut(500);
+  $('#winner1').fadeIn(500);
+
+
 }
 
-// setInterval(blinker, 1000)
+setInterval(blinker, 1000)

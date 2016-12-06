@@ -191,8 +191,17 @@ img {
 
 #btn-reload {
     position: absolute;
-    top: 171px;
+    top: 158px;
     left: 376px;
-    width: 150px;
-    height: 35px;
+    width: 158px;
+    height: 69px;
+    background-color: #902b2d;
+    font-family: monospace;
+    font-size: 20px;
+    color: white;
+    border-radius: 50%;
+}
+.disabled {
+    opacity: 0.9;
+    cursor: not-allowed;
 }
